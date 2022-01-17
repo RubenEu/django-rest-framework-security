@@ -11,12 +11,13 @@ from rest_framework_security.sudo.serializers import (
 
 class StatusView(generics.GenericAPIView):
     """"""
-
+    serializer_class = StatusSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request, **kwargs):
         """"""
-        return Response(StatusSerializer(context=self.get_serializer_context()).data)
+        serializer = self.get_serializer(context=self.get_serializer_context())
+        return Response(serializer.data)
 
 
 class UpdateStatusView(generics.CreateAPIView, generics.GenericAPIView):
