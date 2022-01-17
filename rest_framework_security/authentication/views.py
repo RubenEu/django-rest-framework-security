@@ -19,6 +19,7 @@ from rest_framework_security.authentication.serializers import (
     NextStepSerializer,
 )
 from rest_framework_security.brute_force_protection.views import protect_api_request
+from rest_framework_security.serializers import EmptySerializer
 from rest_framework_security.views import IsOwnerViewSetMixin
 from django.utils.translation import gettext_lazy as _
 
@@ -66,7 +67,7 @@ class UserSessionAPIView(
 
     def get_serializer_class(self):
         if self.action == "purge":
-            return serializers.Serializer
+            return EmptySerializer
         else:
             return super(UserSessionAPIView, self).get_serializer_class()
 

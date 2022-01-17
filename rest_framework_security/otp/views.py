@@ -23,6 +23,7 @@ from rest_framework_security.otp.serializers import (
     OTPStaticSerializer,
     OTPStaticObfuscatedSerializer,
 )
+from rest_framework_security.serializers import EmptySerializer
 from rest_framework_security.sudo.expiration import validate_sudo
 from rest_framework_security.views import IsOwnerViewSetMixin
 
@@ -64,7 +65,7 @@ class OTPDeviceViewSet(
         elif self.action == "create":
             return OTPDeviceCreateSerializer
         elif self.action == "verify":
-            return serializers.Serializer
+            return EmptySerializer
         return super(OTPDeviceViewSet, self).get_serializer_class()
 
     @action(detail=False, methods=["POST", "GET"])
@@ -105,7 +106,7 @@ class OTPStaticViewSet(
         if self.action == "use_token":
             return OTPStaticSerializer
         elif self.action == "create_tokens":
-            return serializers.Serializer
+            return EmptySerializer
         else:
             return super(OTPStaticViewSet, self).get_serializer_class()
 

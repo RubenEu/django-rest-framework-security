@@ -51,3 +51,16 @@ class GeoIPSerializerMixin(serializers.Serializer):
             subdivision.names.get(language_code, subdivision.name)
             for subdivision in obj.geoip2_city_record.subdivisions
         ]
+
+
+class EmptySerializer(serializers.Serializer):
+    """
+    """
+
+    def update(self, instance, validated_data):
+        """
+        """
+
+    def create(self, validated_data):
+        """
+        """
