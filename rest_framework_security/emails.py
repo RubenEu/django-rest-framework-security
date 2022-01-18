@@ -66,5 +66,5 @@ class EmailBase:
         if self.html_email_template_name is not None:
             html_email = loader.render_to_string(self.html_email_template_name, context)
             email_message.attach_alternative(html_email, "text/html")
-
+            add_email_attaches(email_message)
         email_message.send()
