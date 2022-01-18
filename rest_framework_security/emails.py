@@ -1,6 +1,28 @@
+import os
+from email.mime.image import MIMEImage
+
+from django.contrib.staticfiles import finders
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
 from django.template import loader
+
+
+def add_email_attaches(email: EmailMultiAlternatives):
+    if not hasattr(settings, 'EMAIL_ATTACHES'):
+        return email
+    for name, img in settings.EMAIL_ATTACHES:
+        if settings.DEBUG:
+            path = finders.find(img)
+        else:
+            path = os.path.join(settings.BASE_DIR, img)
+        fp = open(path, 'rb')
+        msg_image = MIMEImage(fp.read())
+        fp.close()
+        msg_image.add_header('Content-ID', '<' + name + '>')
+        msg_image.add_header('X-Attachment-Id', name)
+        msg_image.add_header('Content-Disposition', 'inline', filename=name)
+        email.attach(msg_image)
+    return email
 
 
 class EmailBase:
