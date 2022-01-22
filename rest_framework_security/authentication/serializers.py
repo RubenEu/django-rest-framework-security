@@ -83,7 +83,6 @@ class LoginSerializer(serializers.Serializer):
                 f"Attempt to authenticate to non-existent user {username} from ip {get_client_ip(request)}"
             )
         if user is None:
-            protection.auth_failed()
             raise ValidationError("Invalid username or password", "user_login_failed")
         if protection is not None:
             protection.successful_auth()
