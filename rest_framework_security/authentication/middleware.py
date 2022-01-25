@@ -112,4 +112,8 @@ class AuthenticationMiddleware:
                     seconds=config.get_session_age(remember_me)
                 )
                 user_session.session_expires = session_expires
+                # Check if the ip has changed and update the session instance.
+                updated_ip = get_client_ip(request)
+                if ip_address != updated_ip:
+                    user_session.ip_address = updated_ip
                 user_session.save()
