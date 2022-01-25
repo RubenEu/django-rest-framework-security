@@ -92,7 +92,7 @@ class AuthenticationMiddleware:
         ip_address = session.get("ip_address", "")
         renew_time = datetime.timedelta(seconds=config.AUTHENTICATION_RENEW_TIME)
         now = timezone.now()
-        if ip_address and ip_address != get_client_ip(request):
+        if config.AUTHENTICATION_ATTACH_SESSION_TO_IP and ip_address and ip_address != get_client_ip(request):
             logout(request)
         elif not request.user.is_authenticated:
             return
