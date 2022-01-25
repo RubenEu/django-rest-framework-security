@@ -115,5 +115,6 @@ class AuthenticationMiddleware:
                 # Check if the ip has changed and update the session instance.
                 updated_ip = get_client_ip(request)
                 if ip_address != updated_ip:
+                    session["ip_address"] = updated_ip
                     user_session.ip_address = updated_ip
                 user_session.save()
