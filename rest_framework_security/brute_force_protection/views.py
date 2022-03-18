@@ -17,7 +17,7 @@ from rest_framework_security.brute_force_protection.serializers import (
 from rest_framework_security.utils.ip import get_client_ip
 
 
-def protect_api_request(only_on_error=False):
+def protect_api_request(only_on_error=False, increase_attempts=True):
     def decorator(fn):
         @wraps(fn)
         def wrapped(self, request, *args, **kwargs):
@@ -29,9 +29,10 @@ def protect_api_request(only_on_error=False):
             try:
                 response = fn(self, request, *args, **kwargs)
             except ValidationError:
-                brute_force_protection.increase_attempts()
+                if increase_attempts:
+                    brute_force_protection.increase_attempts()
                 raise
-            if not only_on_error or 500 > response.status_code >= 400:
+            if increase_attempts and (not only_on_error or 500 > response.status_code >= 400):
                 brute_force_protection.increase_attempts()
             return response
 
