@@ -68,8 +68,11 @@ class BruteForceProtection:
     def list_soft_ips(self):
         return self.list_keys(f"{config.BRUTE_FORCE_PROTECTION_CACHE_PREFIX}:soft:ip:*")
 
-    def validate(self):
+    def validate(self, require_captcha_always: bool = False):
         attemps = self.get_attempts()
+        # Bypass attempts validation if captcha is mandatory anyway.
+        if require_captcha_always and not self.get_soft_status():
+            raise BruteForceProtectionCaptchaException("Captcha is mandatory")
         if attemps >= config.BRUTE_FORCE_PROTECTION_BAN_LIMIT:
             raise BruteForceProtectionBanException(
                 "Your ip has been banned after several login attempts."

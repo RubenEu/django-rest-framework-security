@@ -17,13 +17,13 @@ from rest_framework_security.brute_force_protection.serializers import (
 from rest_framework_security.utils.ip import get_client_ip
 
 
-def protect_api_request(only_on_error=False, increase_attempts=True):
+def protect_api_request(only_on_error=False, increase_attempts=True, require_captcha_always=False):
     def decorator(fn):
         @wraps(fn)
         def wrapped(self, request, *args, **kwargs):
             brute_force_protection = BruteForceProtection(get_client_ip(request))
             try:
-                brute_force_protection.validate()
+                brute_force_protection.validate(require_captcha_always=require_captcha_always)
             except BruteForceProtectionException as e:
                 raise PermissionDenied(detail=f"{e}")
             try:
