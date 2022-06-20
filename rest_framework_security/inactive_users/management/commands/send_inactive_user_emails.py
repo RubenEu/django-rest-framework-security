@@ -3,7 +3,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.core.management.base import BaseCommand
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext as _
 
 from rest_framework_security.inactive_users import config
 from rest_framework_security.inactive_users.emails import InactiveUserAlertEmail

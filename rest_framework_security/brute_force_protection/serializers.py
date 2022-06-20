@@ -14,7 +14,7 @@ from rest_framework_security.brute_force_protection.protection import (
     BruteForceProtection,
 )
 from rest_framework_security.utils.ip import get_client_ip
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext as _
 
 
 logger = getLogger(__name__)

@@ -1,13 +1,10 @@
-import datetime
-from typing import Iterable, Union
+from typing import Union
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import AbstractUser
-from django.core import mail
 from django.core.management.base import BaseCommand, CommandError
-from django.db.models import QuerySet
 from django.utils.module_loading import import_string
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext as _
 
 from rest_framework_security.periodic_password_change import config
 from rest_framework_security.periodic_password_change.models import (
