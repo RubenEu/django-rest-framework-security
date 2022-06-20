@@ -1,6 +1,7 @@
 from logging import getLogger
+from urllib.error import HTTPError
 
-from captcha import client, _compat
+from captcha import client
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -37,7 +38,7 @@ class CaptchaSerializer(serializers.Serializer):
                 private_key=config.BRUTE_FORCE_PROTECTION_RECAPTCHA_PRIVATE_KEY,
                 remoteip=ip,
             )
-        except _compat.HTTPError:  # Catch timeouts, etc
+        except HTTPError:  # Catch timeouts, etc
             raise ValidationError(
                 _("Error verifying reCAPTCHA, please try again."), code="captcha_error"
             )
