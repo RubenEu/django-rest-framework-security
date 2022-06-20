@@ -8,7 +8,7 @@ from rest_framework_security.deny_repeat_password.emails import ChangedPasswordE
 from rest_framework_security.deny_repeat_password.models import UserPassword
 
 
-password_changed = Signal(providing_args=["user"])
+password_changed = Signal()
 
 
 @receiver(post_save, sender=get_user_model())
