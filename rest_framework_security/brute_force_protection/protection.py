@@ -85,7 +85,7 @@ class BruteForceProtection:
         if require_captcha_always and not self.get_soft_status():
             raise BruteForceProtectionCaptchaException("Captcha is mandatory")
         if attemps >= config.BRUTE_FORCE_PROTECTION_BAN_LIMIT:
-            amount_time = self._get_hours_or_seconds_string(config.BRUTE_FORCE_PROTECTION_BAN_LIMIT)
+            amount_time = self._get_hours_or_seconds_string(config.BRUTE_FORCE_PROTECTION_EXPIRATION)
             raise BruteForceProtectionBanException(
                 f"Your ip has been banned after several login attempts for {amount_time}."
             )
