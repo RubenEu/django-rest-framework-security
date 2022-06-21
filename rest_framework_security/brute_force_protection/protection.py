@@ -68,14 +68,26 @@ class BruteForceProtection:
     def list_soft_ips(self):
         return self.list_keys(f"{config.BRUTE_FORCE_PROTECTION_CACHE_PREFIX}:soft:ip:*")
 
+    def _get_hours_or_seconds_string(self, time: int) -> str:
+        """Convert seconds to a string of number of hours or minutes with the format: ``2 hours`` or ``3900 seconds``.
+
+        :param time: amount of seconds.
+        :return: string of the amount of hours or seconds.
+        """
+        if time % 3600 == 0:
+            return f'{time // 3600} hours'
+        else:
+            return f'{time} seconds'
+
     def validate(self, require_captcha_always: bool = False):
         attemps = self.get_attempts()
         # Bypass attempts validation if captcha is mandatory anyway.
         if require_captcha_always and not self.get_soft_status():
             raise BruteForceProtectionCaptchaException("Captcha is mandatory")
         if attemps >= config.BRUTE_FORCE_PROTECTION_BAN_LIMIT:
+            amount_time = self._get_hours_or_seconds_string(config.BRUTE_FORCE_PROTECTION_BAN_LIMIT)
             raise BruteForceProtectionBanException(
-                "Your ip has been banned after several login attempts."
+                f"Your ip has been banned after several login attempts for {amount_time}."
             )
         if (
             attemps >= config.BRUTE_FORCE_PROTECTION_SOFT_LIMIT
