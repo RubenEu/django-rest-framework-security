@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
@@ -15,7 +14,7 @@ router.register("otp_statics", OTPStaticViewSet)
 
 
 urlpatterns = [
-    url(r"^", include(router.urls)),
+    path("", include(router.urls)),
     path("register/", RegisterView.as_view(), name="otp-register"),
     path("verify/", VerifyView.as_view(), name="otp-verify"),
 ]

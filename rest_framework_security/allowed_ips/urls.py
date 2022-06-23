@@ -1,4 +1,3 @@
-from django.conf.urls import url
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 
@@ -13,5 +12,5 @@ if config.ALLOWED_IPS_USER_IP_CONFIG_MODEL:
 
 
 urlpatterns = [
-    url(r"^", include(router.urls)),
+    path("", include(router.urls)),
 ]

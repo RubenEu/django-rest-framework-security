@@ -1,6 +1,6 @@
 from unittest.mock import patch
+from urllib.error import HTTPError
 
-from captcha import _compat
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APITestCase
@@ -23,7 +23,7 @@ class CaptchaViewSetTestCase(APITestCase):
         self.mock.stop()
 
     def test_captcha_error(self):
-        self.client_mocked.submit.side_effect = _compat.HTTPError(
+        self.client_mocked.submit.side_effect = HTTPError(
             "", 400, "", {"": ""}, None
         )
         response = self.client.post(
