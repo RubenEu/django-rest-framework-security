@@ -30,7 +30,7 @@ class UserIp(models.Model):
             return
         try:
             return geoip2_manager['city'].reader.city(self.ip_address)
-        except AddressNotFoundError:
+        except Exception:
             return
 
     class Meta:
